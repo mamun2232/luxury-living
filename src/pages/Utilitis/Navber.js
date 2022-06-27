@@ -8,7 +8,7 @@ const Navber = () => {
       <li><a>Blog</a></li>
       </>
       return (
-           <div className='  bg-yellow-300'>
+           <div className=''>
              <div class="navbar max-w-7xl m-auto px-2">
   <div class="navbar-start">
     <div class="dropdown">
