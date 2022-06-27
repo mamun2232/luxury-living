@@ -33,7 +33,7 @@ const Project = () => {
                               available today</p>
                   </div>
 
-                  <div className='mt-10 grid grid-cols-1 lg:grid-cols-3 gap-10'>
+                  <div className='mt-20 grid grid-cols-1 lg:grid-cols-3 gap-10'>
                         {
                               projects.map((project , i) =>  <div key={i} class="card card-compact w-96  bg-red-200 ">
                               <figure><img className='h-80 w-full' src={project.img} alt="hotel" /></figure>

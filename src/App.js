@@ -5,6 +5,8 @@ import Home from './pages/Home/Home';
 import Navber from './pages/Utilitis/Navber';
 
 
+  
+
 function App() {
   return (
     <div className="">

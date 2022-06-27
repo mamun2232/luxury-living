@@ -15,7 +15,7 @@ const Service = () => {
                               clients' needs that always delivers</p>
                   </div>
 
-                  <div className='mt-10 grid grid-cols-1 lg:grid-cols-3 gap-10'>
+                  <div className='mt-20 grid grid-cols-1 lg:grid-cols-3 gap-10'>
                         {
                               services.map(service => <div key={service.id} class="card w-96 bg-base-100 rounded-lg shadow-xl">
                                     <figure><img className='w-28' src={service.img} alt="service" /></figure>
@@ -32,8 +32,13 @@ const Service = () => {
                               </div>)
                         }
 
+                        
 
 
+
+                  </div>
+                  <div className="text-right mt-5">
+                  <button className='btn'>Explore more</button>
                   </div>
             </div>
       );
