@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import LoginModal from '../Authentication/LoginModal';
 
 const Navber = () => {
+  let [isOpen, setIsOpen] = useState(false)
+
+  function closeModal() {
+    setIsOpen(false)
+  }
+
+  function openModal() {
+    setIsOpen(true)
+  }
       const menu = <>
       <li><a>About Us </a></li>
       <li><a>Project</a></li>
@@ -49,9 +59,24 @@ const Navber = () => {
         <li><a>Logout</a></li>
       </ul>
     </div>
-    <a class="btn">Login</a>
+    <button
+          type="button"
+          onClick={openModal}
+          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+        >
+          Get Start
+        </button>
   </div>
 </div>
+
+
+          {/* login modal  */}
+          {isOpen && <LoginModal
+          closeModal={closeModal}
+          openModal={openModal}
+          isOpen={isOpen}
+          >
+            </LoginModal>}
            </div>
       );
 };
