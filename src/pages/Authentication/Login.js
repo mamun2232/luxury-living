@@ -1,6 +1,9 @@
+
 import React from 'react';
 
-const Login = () => {
+
+const Login = () => { 
+      
       return (
             <div>
                   <div class="form-control w-full max-w-xs">

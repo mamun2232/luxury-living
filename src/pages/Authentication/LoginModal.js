@@ -5,9 +5,41 @@ import Login from './Login';
 import Registation from './Registation';
 import SocailLogin from './SocailLogin';
 import { TiDeleteOutline } from 'react-icons/ti';
+import * as Yup from "yup";
+import { useFormik, Form, FormikProvider } from "formik";
+
+
+const validate = Yup.object({
+  email: Yup.string().email('Invalid email address').required('Required'),
+  password: Yup.string().min(8).required('Required'),
+
+})
 
 const LoginModal = ({ closeModal, openModal, isOpen }) => {
   const [login, setLogin] = useState(true)
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+
+
+    },
+    validationSchema: validate,
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  })
+  const {
+    errors,
+    setFieldValue,
+    touched,
+    values,
+    isSubmitting,
+    handleSubmit,
+    getFieldProps,
+  } = formik;
+
 
   return (
 
@@ -43,53 +75,79 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
                   <Dialog.Title
                     as="h3"
                     className="text-2xl font-medium leading-6 text-center text-gray-900 relative"
-                  > <span onClick={()=> closeModal()} className=' absolute right-0 top-0 cursor-pointer'><TiDeleteOutline/></span>
-                    
-                    
-                    
+                  > <span onClick={() => closeModal()} className=' absolute right-0 top-0 cursor-pointer'><TiDeleteOutline /></span>
+
+
+
                   </Dialog.Title>
                   <div className="mt-2">
-                  <p  className='text-xl text-center mt-5'>{login ? "Login" : "Registation"}</p>
-                    
+                    <p className='text-xl text-center mt-5'>{login ? "Login" : "Registation"}</p>
+
                     {
                       login ? <div>
-                        {/* Login
-                              <p>Are Youw new?</p> <button onClick={()=> setLogin(false)}>Plese Singin</button> */}
                         <div className=' lg:px-14 px-5'>
-                          
-                          <form >
-                          <div className=''>
-                            <Login></Login>
-                            </div>
-                            
-                          </form>
+
+                          <FormikProvider value={formik}>
+                            <Form autoComplete="off" onSubmit={handleSubmit}>
+                              <div className=''>
+                                <div>
+                                  <div class="form-control w-full max-w-xs">
+                                    <label class="label">
+                                      <span class="label-text">Email</span>
+
+                                    </label>
+                                    <input type="email" id='email' {...formik.getFieldProps('email')} placeholder="Email Address" class="input input-bordered w-full max-w-xs" />
+                                    <label class="label">
+                                      {formik.touched.email && formik.errors.email ? (
+                                        <p className='text-red-500'>{formik.errors.email}</p>
+                                      ) : null}
+
+                                    </label>
+                                  </div>
+                                  <div class="form-control w-full max-w-xs ">
+                                    <label class="label">
+                                      <span class="label-text">Password</span>
+
+                                    </label>
+                                    <input type="password" id='password' {...formik.getFieldProps('password')} placeholder="Enter Password" class="input input-bordered w-full max-w-xs" />
+                                    <label class="label">
+                                      {formik.touched.password && formik.errors.password ? (
+                                        <p className='text-red-500'>{formik.errors.password}</p>
+                                      ) : null}
+                                    </label>
+
+                                    <input className='btn' type="submit" value="Login" />
+                                    <p className='text-right text-blue-500 mt-1'>Forgate Password</p>
+
+                                  </div>
+                                </div>
+                              </div>
+
+                            </Form>
+                          </FormikProvider>
+
+
                           <SocailLogin
-                              login={login}
-                              setLogin={setLogin}
+                            login={login}
+                            setLogin={setLogin}
                           ></SocailLogin>
                         </div>
                       </div>
 
 
-
-
-
-
                         : <div>
                           <div className="lg:mx-14 px-5">
-                          <form >
+
                             <div>
-                            <Registation></Registation>
+                              <Registation
+                                formik={formik}
+                                getFieldProps={getFieldProps}
+                              ></Registation>
                             </div>
-                            
-                          </form>
-                          <SocailLogin
+                            <SocailLogin
                               setLogin={setLogin}
-                          ></SocailLogin>
+                            ></SocailLogin>
                           </div>
-                         
-
-
                         </div>
                     }
                   </div>
