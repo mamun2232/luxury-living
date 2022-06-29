@@ -7,6 +7,11 @@ import SocailLogin from './SocailLogin';
 import { TiDeleteOutline } from 'react-icons/ti';
 import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
+// import auth from '../../../firebase.init'
+
+import { useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
 
 
 const validate = Yup.object({
@@ -17,9 +22,17 @@ const validate = Yup.object({
 })
 
 
-const Registation = () => {
+const Registation = ({closeModal}) => {
+  
+  const navigate = useNavigate()
+  const [
+    createUserWithEmailAndPassword,
+    creatUser,
+    loading,
+    creatError,
+  ] = useCreateUserWithEmailAndPassword(auth);
 
-
+  const [updateProfile, updating, updateError] = useUpdateProfile();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,6 +44,8 @@ const Registation = () => {
     validationSchema: validate,
     onSubmit: async (values) => {
       console.log(values);
+     await createUserWithEmailAndPassword(values.email , values.password)
+     await updateProfile({ displayName: values.name });
     },
   })
   const {
@@ -42,6 +57,18 @@ const Registation = () => {
     handleSubmit,
     getFieldProps,
   } = formik;
+   
+  if(creatUser){
+    navigate('/')
+    closeModal(false)
+
+  }
+
+  let errorMassage ;
+  if(creatError){
+    errorMassage = <p className='text-red-500'>{creatError?.message}</p>
+  }
+
 
   return (
     <div>
@@ -87,6 +114,7 @@ const Registation = () => {
 
 
             <input className='btn' type="submit" value="Register" />
+            {errorMassage}
 
           </div>
 

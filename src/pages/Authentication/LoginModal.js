@@ -7,6 +7,9 @@ import SocailLogin from './SocailLogin';
 import { TiDeleteOutline } from 'react-icons/ti';
 import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
+import auth from '../../firebase.init';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
 
 
 const validate = Yup.object({
@@ -17,6 +20,13 @@ const validate = Yup.object({
 
 const LoginModal = ({ closeModal, openModal, isOpen }) => {
   const [login, setLogin] = useState(true)
+  const navigate = useNavigate()
+  const [
+    signInWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useSignInWithEmailAndPassword(auth);
 
   const formik = useFormik({
     initialValues: {
@@ -28,6 +38,7 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
     validationSchema: validate,
     onSubmit: async (values) => {
       console.log(values);
+      signInWithEmailAndPassword(values.email , values.password)
     },
   })
   const {
@@ -39,6 +50,15 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
     handleSubmit,
     getFieldProps,
   } = formik;
+  
+  if(user){
+    navigate('/')
+    closeModal(false)
+  }
+  let errorMassage ;
+  if(error){
+    errorMassage = <p className='text-red-500'>{error?.message}</p>
+  }
 
 
   return (
@@ -117,6 +137,7 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
                                     </label>
 
                                     <input className='btn' type="submit" value="Login" />
+                                    { errorMassage}
                                     <p className='text-right text-blue-500 mt-1'>Forgate Password</p>
 
                                   </div>
@@ -140,8 +161,7 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
 
                             <div>
                               <Registation
-                                formik={formik}
-                                getFieldProps={getFieldProps}
+                                closeModal={closeModal}
                               ></Registation>
                             </div>
                             <SocailLogin

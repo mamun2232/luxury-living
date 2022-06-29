@@ -1,4 +1,7 @@
+import { signOut } from 'firebase/auth';
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 import LoginModal from '../Authentication/LoginModal';
 
 const Navber = () => {
@@ -6,14 +9,19 @@ const Navber = () => {
 
   function closeModal() {
     setIsOpen(false)
+   
   }
 
   function openModal() {
     setIsOpen(true)
   }
+  const [user ] = useAuthState(auth)
       const menu = <>
       <li><a>About Us </a></li>
       <li><a>Project</a></li>
+      {
+        user &&  <li><a>Dashboard</a></li>
+      }
       <li><a>Contact</a></li>
       <li><a>Blog</a></li>
       </>
@@ -56,7 +64,7 @@ const Navber = () => {
           </a>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><button onClick={ () =>  signOut(auth)}>Logout</button></li>
       </ul>
     </div>
     <button
