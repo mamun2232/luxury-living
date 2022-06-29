@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SocailLogin = ({setLogin , login}) => {
+const SocailLogin = ({setLogin , login , signInWithGoogle}) => {
       return (
             <div className='mt-2'>
                   <div class="flex flex-col w-full border-opacity-50">
@@ -12,7 +12,7 @@ const SocailLogin = ({setLogin , login}) => {
                   }
                        
                         <div class="divider">OR</div>
-                       <button className='btn btn-outline btn-secondary'>Google</button>
+                       <button onClick={() => signInWithGoogle()} className='btn btn-outline btn-secondary'>Google</button>
                   </div>
             </div>
       );

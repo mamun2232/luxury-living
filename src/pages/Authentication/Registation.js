@@ -22,7 +22,7 @@ const validate = Yup.object({
 })
 
 
-const Registation = ({closeModal}) => {
+const Registation = ({closeModal , googleerror , gooleuser}) => {
   
   const navigate = useNavigate()
   const [
@@ -31,6 +31,7 @@ const Registation = ({closeModal}) => {
     loading,
     creatError,
   ] = useCreateUserWithEmailAndPassword(auth);
+  
 
   const [updateProfile, updating, updateError] = useUpdateProfile();
   const formik = useFormik({
@@ -58,15 +59,15 @@ const Registation = ({closeModal}) => {
     getFieldProps,
   } = formik;
    
-  if(creatUser){
+  if(creatUser || gooleuser){
     navigate('/')
     closeModal(false)
 
   }
 
   let errorMassage ;
-  if(creatError){
-    errorMassage = <p className='text-red-500'>{creatError?.message}</p>
+  if(creatError || googleerror){
+    errorMassage = <p className='text-red-500'>{creatError?.message || googleerror?.message}</p>
   }
 
 

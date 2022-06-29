@@ -8,7 +8,7 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
 import auth from '../../firebase.init';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -27,6 +27,7 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
     loading,
     error,
   ] = useSignInWithEmailAndPassword(auth);
+  const [signInWithGoogle, gooleuser, Googleloading, googleerror] = useSignInWithGoogle(auth);
 
   const formik = useFormik({
     initialValues: {
@@ -51,13 +52,13 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
     getFieldProps,
   } = formik;
   
-  if(user){
+  if(user || gooleuser){
     navigate('/')
     closeModal(false)
   }
   let errorMassage ;
-  if(error){
-    errorMassage = <p className='text-red-500'>{error?.message}</p>
+  if(error || googleerror){
+    errorMassage = <p className='text-red-500'>{error?.message || googleerror?.message}</p>
   }
 
 
@@ -149,8 +150,10 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
 
 
                           <SocailLogin
+                          signInWithGoogle={signInWithGoogle}
                             login={login}
                             setLogin={setLogin}
+                          
                           ></SocailLogin>
                         </div>
                       </div>
@@ -161,10 +164,13 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
 
                             <div>
                               <Registation
+                          gooleuser={gooleuser}
+                           googleerror={googleerror}
                                 closeModal={closeModal}
                               ></Registation>
                             </div>
                             <SocailLogin
+                             signInWithGoogle={signInWithGoogle}
                               setLogin={setLogin}
                             ></SocailLogin>
                           </div>

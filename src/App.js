@@ -3,16 +3,34 @@ import './App.css';
 import { Route,  Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Navber from './pages/Utilitis/Navber';
+import Profile from './pages/Profile/Profile';
+import RequreAuth from './pages/Authentication/RequreAuth';
+import Dashborad from './pages/DashBoard/Dashborad';
+import Book from './pages/DashBoard/Book';
+import BookingList from './pages/DashBoard/BookingList';
+import Review from './pages/DashBoard/Review';
 
 
   
 
 function App() {
   return (
-    <div className="">
+    <div className=" ">
       <Navber></Navber>
       <Routes>
         <Route path='/' element={<Home/>}></Route>
+        <Route path='/dashboard' element={<Dashborad> </Dashborad>}>
+          <Route index element={<Book/>}></Route>
+          <Route path='/dashboard/bookingList' element={<BookingList/>}></Route>
+          <Route path='/dashboard/review' element={<Review/>}></Route>
+        </Route>
+        <Route path='/myProfile' element={
+          <RequreAuth>
+            <Profile></Profile>
+          </RequreAuth>
+        
+    
+      }></Route>
       </Routes>
      
     </div>
