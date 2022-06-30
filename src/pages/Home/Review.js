@@ -11,7 +11,7 @@ import { Pagination, Navigation } from "swiper";
 const Review = () => {
   const [review, setReview] = useState([])
   useEffect(() => {
-    fetch('Review.json')
+    fetch('http://localhost:5000/review')
       .then(res => res.json())
       .then(data => setReview(data))
   }, [])

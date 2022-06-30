@@ -1,7 +1,54 @@
 import React, { useEffect, useState } from 'react';
+import * as Yup from "yup";
+import { useFormik, Form, FormikProvider } from "formik";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+
+const validate = Yup.object({
+      name: Yup.string().required('Required'),
+      country: Yup.string().required('Required'),
+      retings: Yup.string().min(5).required("Required"),
+      img: Yup.string().required("Required"),
+      comment: Yup.string().min(100).required("Required")
+    
+    })
+    
 
 const Review = () => {
+      const [user] = useAuthState(auth)
       const [Bookings, setBooking] = useState([])
+      const formik = useFormik({
+            initialValues: {
+              name: "",
+              country: "",
+              retings: "",
+              img: "",
+              comment: "",
+
+        
+        
+            },
+            validationSchema: validate,
+            onSubmit: async (values) => {
+              console.log(values);
+          
+            },
+          })
+
+
+
+          const {
+            errors,
+            setFieldValue,
+            touched,
+            values,
+            isSubmitting,
+            handleSubmit,
+            getFieldProps,
+          } = formik;
+           
+
+     
 
       useEffect(() => {
             fetch('booking.json')
@@ -17,58 +64,68 @@ const Review = () => {
                  <div class="card w-1/2 mx-auto border  bg-base-100 shadow-xl">
                         <div class="card-body">
                         <div className=''>
-                        <form action="">
+                              <FormikProvider value={formik}>
+                              <Form autoComplete="off" onSubmit={handleSubmit}>
+
                               <div class="form-control w-full  ">
                                     <label class="label">
                                           <span class="label-text">Name</span>
                                     </label>
-                                    <input type="text" placeholder="Type here" class="input input-bordered " />
-                                    {/* <label class="label">
-    <span class="label-text-alt">Alt label</span>
-    
-  </label> */}
-                              </div>
+                                    <input {...formik.getFieldProps('name')}  type="text" id='name' placeholder="Type here" class="input input-bordered " />
+                                    <label class="label">
+              {formik.touched.name && formik.errors.name ? (
+                <p className='text-red-500'>{formik.errors.name}</p>
+              ) : null}
+
+            </label>
+                                           </div>
                               <div class="form-control w-full ">
                                     <label class="label">
                                           <span class="label-text">From</span>
                                     </label>
-                                    <input type="text" placeholder="Type here" class="input input-bordered " />
-                                    {/* <label class="label">
-    <span class="label-text-alt">Alt label</span>
-    
-  </label> */}
+                                    <input {...formik.getFieldProps('country')} type="text" id='country' placeholder="country" class="input input-bordered " />
+                                    <label class="label">
+              {formik.touched.country && formik.errors.country ? (
+                <p className='text-red-500'>{formik.errors.country}</p>
+              ) : null}
+
+            </label>
                               </div>
                              
                               <div class="form-control w-full ">
                                     <label class="label">
                                           <span class="label-text">Retings</span>
                                     </label>
-                                    <input type="text" placeholder="Type here" class="input input-bordered " />
-                                    {/* <label class="label">
-    <span class="label-text-alt">Alt label</span>
-    
-  </label> */}
+                                    <input {...formik.getFieldProps('retings')} type="text" id='retings' placeholder="Retings" class="input input-bordered " />
+                                    <label class="label">
+              {formik.touched.retings && formik.errors.retings ? (
+                <p className='text-red-500'>{formik.errors.retings}</p>
+              ) : null}
+
+            </label>
                               </div>
                               <div class="form-control w-full ">
                                     <label class="label">
                                           <span class="label-text">Picture</span>
                                     </label>
-                                    <input type="file" placeholder="Type here" class="input input-bordered " />
-                                    {/* <label class="label">
-    <span class="label-text-alt">Alt label</span>
-    
-  </label> */}
-                              </div>
+                                    <input {...formik.getFieldProps('img')} type="file" id='img' placeholder="Picture" class="input input-bordered " />
+                                    <label class="label">
+              {formik.touched.img && formik.errors.img ? (
+                <p className='text-red-500'>{formik.errors.img}</p>
+              ) : null}
+
+            </label>  </div>
                               <div class="form-control w-full ">
                                     <label class="label">
                                           <span class="label-text">Comment</span>
                                     </label>
-                                    <textarea  type="text" placeholder="Type here" class="input input-bordered h-28 " />
-                                    {/* <label class="label">
-    <span class="label-text-alt">Alt label</span>
-    
-  </label> */}
-                              </div>
+                                    <textarea {...formik.getFieldProps('comment')} id='comment'  type="text" placeholder="comment" class="input input-bordered h-28 " />
+                                    <label class="label">
+              {formik.touched.comment && formik.errors.comment ? (
+                <p className='text-red-500'>{formik.errors.comment}</p>
+              ) : null}
+
+            </label>       </div>
                              
                             
                              
@@ -77,7 +134,11 @@ const Review = () => {
 
                               </div>
 
-                        </form>
+
+
+                              </Form>
+                              </FormikProvider>
+                       
                   </div>
                         </div>
                   </div>
