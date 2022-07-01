@@ -3,18 +3,20 @@ import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const validate = Yup.object({
       name: Yup.string().required('Required'),
       country: Yup.string().required('Required'),
-      retings: Yup.string().min(5).required("Required"),
-      img: Yup.string().required("Required"),
-      comment: Yup.string().min(100).required("Required")
-    
+      retings: Yup.string().min(1).required("Required"),
+      file: Yup.string().required("Required"),
+      comment: Yup.string().min(10).required("Required")
     })
     
-
 const Review = () => {
+      const [img , setImg] = useState('')
+      const imgStoreKey = '1fe75df5e8cd0b81598a1310550e7275'
       const [user] = useAuthState(auth)
       const [Bookings, setBooking] = useState([])
       const formik = useFormik({
@@ -22,18 +24,59 @@ const Review = () => {
               name: "",
               country: "",
               retings: "",
-              img: "",
+              file: "",
               comment: "",
 
         
         
             },
             validationSchema: validate,
-            onSubmit: async (values) => {
-              console.log(values);
-          
-            },
-          })
+            onSubmit: async (values , setFieldValue) => {
+              console.log(values );
+              const picture = values.file
+            //   filereader to use img url access 
+            /*   const reader = new FileReader()
+              reader.readAsDataURL(picture)
+              reader.onload = () => {
+                  // console.log(reader.result);
+                  setImg(reader.result); 
+              }
+ */
+              const formData = new FormData();
+              formData.append('image', picture);
+              const url = `https://api.imgbb.com/1/upload?key=${imgStoreKey}`;
+              fetch(url , {
+                    method: "POST",
+                    body: formData
+              })
+              .then(res => res.json())
+              .then(data => {
+                  const uplodedPicture = data.data.url
+                  console.log( uplodedPicture);
+                  const review = {
+                        name: values.name,
+                        img: uplodedPicture,
+                        retings: values.retings,
+                        comment: values.comment,
+                        country: values.country,
+                  }
+                  fetch('http://localhost:5000/review' , {
+                        method: "POST",
+                        headers: {
+                              'Content-type': 'application/json',
+                        },
+                        body: JSON.stringify(review)
+                  })
+                  .then(res => res.json())
+                  .then(data => {
+                        toast(data.message)
+
+                  })
+              })
+             
+                 
+
+            },})
 
 
 
@@ -45,17 +88,13 @@ const Review = () => {
             isSubmitting,
             handleSubmit,
             getFieldProps,
+            formProps
           } = formik;
            
 
      
 
-      useEffect(() => {
-            fetch('booking.json')
-                  .then(res => res.json())
-                  .then(data => console.log(data))
-      }, [])
-
+    
       return (
             <div>
                   <p className='text-xl mt-1 text-center'>Please Review</p>
@@ -108,10 +147,19 @@ const Review = () => {
                                     <label class="label">
                                           <span class="label-text">Picture</span>
                                     </label>
-                                    <input {...formik.getFieldProps('img')} type="file" id='img' placeholder="Picture" class="input input-bordered " />
+                                    <input 
+                                    
+                                   onChange={(event) => {
+                                    setFieldValue("file", event.target.files[0] )
+                                   }}
+                                    
+                                     
+                                    type="file"  id='file' placeholder="Picture" class="input input-bordered "
+                                   
+                                    />
                                     <label class="label">
-              {formik.touched.img && formik.errors.img ? (
-                <p className='text-red-500'>{formik.errors.img}</p>
+              {formik.touched.file && formik.errors.file ? (
+                <p className='text-red-500'>{formik.errors.file}</p>
               ) : null}
 
             </label>  </div>
@@ -133,11 +181,13 @@ const Review = () => {
                                     <input className='btn px-8' type="submit" value="Review" />
 
                               </div>
+                            
 
 
 
                               </Form>
                               </FormikProvider>
+                              
                        
                   </div>
                         </div>

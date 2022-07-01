@@ -11,6 +11,8 @@ import BookingList from './pages/DashBoard/BookingList';
 import Review from './pages/DashBoard/Review';
 import NomalLogin from './pages/Authentication/NomalLogin';
 import NormalRegister from './pages/Authentication/NormalRegister';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
   
@@ -36,6 +38,7 @@ function App() {
     
       }></Route>
       </Routes>
+      <ToastContainer></ToastContainer>
      
     </div>
   );
