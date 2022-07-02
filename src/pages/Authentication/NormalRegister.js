@@ -7,6 +7,7 @@ import { useFormik, Form, FormikProvider } from "formik";
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import UseToken from '../Hook/UseToken';
 
 
 const validate = Yup.object({
@@ -54,11 +55,14 @@ const NormalRegister = () => {
             getFieldProps,
       } = formik;
 
-      if (creatUser || gooleuser) {
+
+      const [token] = UseToken(creatUser || gooleuser)
+
+      if (token) {
             navigate('/')
 
-
       }
+
 
       let errorMassage;
       if (creatError || googleerror) {

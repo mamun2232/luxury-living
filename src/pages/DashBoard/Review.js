@@ -27,8 +27,6 @@ const Review = () => {
               file: "",
               comment: "",
 
-        
-        
             },
             validationSchema: validate,
             onSubmit: async (values , setFieldValue) => {

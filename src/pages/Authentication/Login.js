@@ -6,6 +6,7 @@ import { useFormik, Form, FormikProvider } from "formik";
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useNavigate } from 'react-router-dom';
+import UseToken from '../Hook/UseToken';
 
 
 const validate = Yup.object({
@@ -53,7 +54,9 @@ const Login = ({ closeModal, googleerror, gooleuser }) => {
     errorMassage = <p className='text-red-500'>{error?.message || googleerror?.message}</p>
   }
 
-  if (user || gooleuser) {
+   const [token] = UseToken(user || gooleuser)
+
+  if (token) {
     navigate('/')
     closeModal(false)
   }

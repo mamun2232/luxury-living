@@ -12,6 +12,7 @@ import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfil
 
 import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import UseToken from '../Hook/UseToken';
 
 
 const validate = Yup.object({
@@ -59,7 +60,9 @@ const Registation = ({ closeModal, googleerror, gooleuser }) => {
     getFieldProps,
   } = formik;
 
-  if (creatUser || gooleuser) {
+  const [token] = UseToken(creatUser || gooleuser)
+
+  if (token) {
     navigate('/')
     closeModal(false)
 

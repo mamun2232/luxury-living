@@ -4,8 +4,9 @@ import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SocailLogin from './SocailLogin';
+import UseToken from '../Hook/UseToken';
 
 
 const validate = Yup.object({
@@ -15,6 +16,9 @@ const validate = Yup.object({
 })
 
 const NomalLogin = () => {
+      const location = useLocation()
+      let from = location.state?.from?.pathname || "/";
+      
       const navigate = useNavigate()
       const [signInWithGoogle, gooleuser, Googleloading, googleerror] = useSignInWithGoogle(auth);
       const [
@@ -52,8 +56,12 @@ const NomalLogin = () => {
             errorMassage = <p className='text-red-500'>{error?.message || googleerror.message}</p>
       }
 
-      if (user || gooleuser) {
-            navigate('/')
+      const [token] = UseToken(user || gooleuser)
+
+      if (token) {
+            console.log(token);
+            navigate(from, { replace: true })
+            console.log(token);
 
       }
 
