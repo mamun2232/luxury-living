@@ -13,6 +13,7 @@ import NomalLogin from './pages/Authentication/NomalLogin';
 import NormalRegister from './pages/Authentication/NormalRegister';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Payment from './pages/DashBoard/Payment';
 
 
   
@@ -29,6 +30,7 @@ function App() {
           <Route index element={<Book/>}></Route>
           <Route path='/dashboard/bookingList' element={<BookingList/>}></Route>
           <Route path='/dashboard/review' element={<Review/>}></Route>
+          <Route path='payment/:id' element={<Payment/>}></Route>
         </Route>
         <Route path='/myProfile' element={
           <RequreAuth>

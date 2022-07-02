@@ -42,8 +42,9 @@ const NormalRegister = () => {
             onSubmit: async (values) => {
                   console.log(values);
                   await createUserWithEmailAndPassword(values.email, values.password)
-                  await updateProfile({ displayName: values.name });
+                  await updateProfile({displayName: values.name });
             },
+            
       })
       const {
             errors,

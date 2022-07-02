@@ -1,45 +1,60 @@
 import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import BookingRow from "./BookingRow";
 
 const BookingList = () => {
-  const [Bookings , setBooking] = useState([])
+  const [Bookings, setBooking] = useState([])
+  const [user] = useAuthState(auth)
+ 
 
-  useEffect(()=>{
-    fetch('booking.json')
-    .then(res => res.json())
-    .then(data => console.log(data))
-  },[])
-    
-      
-     
-     
-      return (
-            <div className=''>
-                  <p className=''>Your Booking List</p>
+  useEffect(() => {
+    fetch(`http://localhost:5000/order/${user?.email}`)
+      .then(res => res.json())
+      .then(data => setBooking(data))
+  }, [user])
 
-                  {/* <div>
-                 {
-                  services?.map(book =>  <div key={book.id} class="card w-96 bg-base-200 shadow-lg">
-                  <div class="card-body">
-                    <div className='flex justify-between'>
-                    <div class="w-24 rounded-xl">
-                    <img src={book.img} />
-                  </div>
-                
-                  <button className='btn'>Done</button>
-                    </div>
-                    <div>
-                        <h1 className='text-xl'>{book.service} </h1>
-                        <p className='text-xl'>{book.dtls} </p>
-                
-                    </div>
-                  </div>
-                </div>)
-                 }
-                  </div> */}
-                  
-                 
-            </div>
-      );
+
+
+
+  return (
+    <div className=''>
+      <p className=''>Your Booking List</p>
+
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          {/* <!-- head --> */}
+          <thead>
+            <tr>
+              <th>Oder No</th>
+              <th>Service Name</th>
+              <th>Price</th>
+              <th>Payment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          
+            {Bookings.map((book ,index) => <BookingRow
+            book={book}
+            key={book._id}
+            index={index}
+            
+            >
+
+            </BookingRow>)}
+           
+           
+          
+          </tbody>
+        </table>
+      </div>
+
+
+
+
+    </div>
+  );
 };
 
 export default BookingList;
