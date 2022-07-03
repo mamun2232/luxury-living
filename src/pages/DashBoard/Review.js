@@ -95,10 +95,10 @@ const Review = () => {
     
       return (
             <div>
-                  <p className='text-xl mt-1 text-center'>Please Review</p>
+                  <p className='text-center text-xl my-2'>Please Review</p>
                   
                  <div className=' mt-5'>
-                 <div class="card w-1/2 mx-auto border  bg-base-100 shadow-xl">
+                 <div class="card  w-full lg:w-1/2 mx-auto border  bg-base-100 shadow-xl">
                         <div class="card-body">
                         <div className=''>
                               <FormikProvider value={formik}>
@@ -176,7 +176,7 @@ const Review = () => {
                             
                              
                               <div className='w-full  text-center mt-2'>
-                                    <input className='btn px-8' type="submit" value="Review" />
+                                    <input className='my-btn px-8' type="submit" value="Review" />
 
                               </div>
                             

@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import BookingRow from "./BookingRow";
 
+
 const BookingList = () => {
   const [Bookings, setBooking] = useState([])
   const [user] = useAuthState(auth)
@@ -12,16 +13,16 @@ const BookingList = () => {
     fetch(`http://localhost:5000/order/${user?.email}`)
       .then(res => res.json())
       .then(data => setBooking(data))
-  }, [user])
+  }, [user , Bookings])
 
 
 
 
   return (
     <div className=''>
-      <p className=''>Your Booking List</p>
+      <p className='text-center text-xl my-2'>Your Booking List</p>
 
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto px-4">
         <table class="table table-zebra w-full">
           {/* <!-- head --> */}
           <thead>

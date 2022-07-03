@@ -1,7 +1,7 @@
 import { signOut } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import auth from '../../firebase.init';
 import LoginModal from '../Authentication/LoginModal';
 import RequreAuth from '../Authentication/RequreAuth';
@@ -18,17 +18,19 @@ const Navber = () => {
     setIsOpen(true)
   }
   const [user ] = useAuthState(auth)
+  console.log(user);
       const menu = <>
-      <li><a>About Us </a></li>
-      <li><a>Project</a></li>
+     
+     <li><NavLink to='/'>Home</NavLink></li>
+     <li><NavLink to='/service'>Service</NavLink></li>
       {
-        user &&  <li><Link to='/dashboard'>Dashboard</Link></li>
+        user &&  <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
       }
-      <li><a>Contact</a></li>
-      <li><a>Blog</a></li>
+      
+      <li><NavLink to="/project">Project</NavLink></li>
       </>
       return (
-           <div className=''>
+           <div className='nav-background'>
              <div class="navbar max-w-7xl m-auto px-2">
   <div class="navbar-start">
     <div class="dropdown">
@@ -83,6 +85,13 @@ const Navber = () => {
         >
           Get Start
         </button>
+        {/* <Link to='/login' className='rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>Login</Link> */}
+       
+        <label for="my-drawer-2" class=" px-2 drawer-button lg:hidden"> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+      
+      </svg></label>
+        
+        
   </div>
 </div>
 

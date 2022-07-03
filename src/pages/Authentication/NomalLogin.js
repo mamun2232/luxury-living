@@ -69,7 +69,7 @@ const NomalLogin = () => {
             <div className='flex h-screen justify-center items-center'>
                   <div class="card w-96 bg-base-100 shadow-xl">
                         <div class="card-body">
-                              <h2 class=" text-center">Card title!</h2>
+                              <h2 class=" text-center">Login</h2>
 
                               <div>
                                     <FormikProvider value={formik}>

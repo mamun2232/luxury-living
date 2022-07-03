@@ -9,7 +9,9 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js'
 
 import ChackoutFrom from './ChackoutFrom';
-const stripePromise = loadStripe('pk_test_51L1nmNCGpaTt0RU8npNSNITrjLTAUDjwjX275RD6RDk5SGoYi1H1zLKxAis8OFp4C0PxQBT2L5c0L0VsTI9ewqGl00dT2UHEXy');
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+
 const validate = Yup.object({
       name: Yup.string().required('Required'),
 
@@ -24,12 +26,30 @@ const Book = () => {
       const [user] = useAuthState(auth)
       // const [price , setPrice] = useState(0)
       const priceRef = useRef(0)
+      const navigate = useNavigate()
 
 
       useEffect(() => {
 
-            fetch('http://localhost:5000/service')
-                  .then(res => res.json())
+            fetch('http://localhost:5000/service' , {
+                  method: "GET",
+                  headers: {
+                        'Content-type': 'application/json',
+                                    'authorization': `Bearer ${localStorage.getItem('AccessToken')}`
+                      }
+
+            })
+                  .then(res => {
+                        if(res.status == 401 || res.status === 403){
+                              signOut(auth)
+                              localStorage.removeItem('AccessToken')
+                              navigate('/login')
+                  
+                        }
+                  
+                  
+                            return res.json()
+                  })
                   .then(data => setBook(data))
                 
       }, [books])
@@ -78,11 +98,22 @@ const Book = () => {
                         body: JSON.stringify(order),
                         headers: {
                               'Content-type': 'application/json; charset=UTF-8',
+                              'authorization': `Bearer ${localStorage.getItem('AccessToken')}`
                         },
                   })
-                        .then((res) => res.json())
+                        .then((res) => {
+                              if(res.status === 401 || res.status === 403){
+                                    signOut(auth)
+                                    localStorage.removeItem('AccessToken')
+                                    navigate('/login')
+                        
+                              }
+                        }
+                        )
                         .then((data) => {
+                              console.log(data);
                               toast(data?.message)
+                              
                         });
 
 
@@ -108,7 +139,7 @@ const Book = () => {
       return (
             <div className='px-4'>
                   <p className='text-center text-xl mt-1'>Book Now</p>
-                  <div class="card mt-5  w-1/2 mx-auto border  shadow-xl">
+                  <div class="card mt-5 bg-white w-full lg:w-1/2 mx-auto border  shadow-xl">
                         <div class="card-body" >
                               <div className=''>
                                     <FormikProvider value={formik}>
@@ -235,7 +266,7 @@ const Book = () => {
                                                       </div>
                                                 </div>
                                                 <div className=' text-center mt-4'>
-                                                      <input className='btn px-8' type="submit" value="Order" />
+                                                      <input className='my-btn px-8' type="submit" value="Order" />
 
                                                 </div>
 
@@ -243,9 +274,7 @@ const Book = () => {
 
                                     </FormikProvider>
 
-                                    {/* <Elements stripe={stripePromise}>
-                                                                  <ChackoutFrom />
-                                                            </Elements> */}
+                                    
 
                               </div>
                         </div>

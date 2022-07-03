@@ -16,6 +16,20 @@
   }
 }
 
+.background{
+  background-color: #fafafa
+}
+.nav-background{
+  background-color: #cbd5e1
+  ;
+}
+.my-btn{
+  background-color: #251D58;
+ color: white;
+ padding: 10px 30px;
+ border-radius: 10px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

@@ -1,30 +1,38 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { Suspense, useEffect, useState } from 'react';
 
-const ChackoutFrom = () => {
+const ChackoutFrom = ({myOrder}) => {
       const stripe = useStripe();
       const elements = useElements();
       const [cardError , setCardError] = useState('')
       const [clientSecrect , setClientSecrect] = useState('')
       const [success , setSuccess] = useState('')
-      const price = 500
+      const [transactionId ,  setTransactionId] = useState('')
+
+      const {_id,price , email , name , number} = myOrder
+  
 
       useEffect(()=> {
-            fetch('http://localhost:5000/create-payment-intent' , {
-                  method: "POST",
-                  headers: {
-                        'content-type': 'application/json',
-                  },
-                  body: JSON.stringify({price})
-            })
-            .then(res => res.json())
-            .then(data => {
-                  if(data?.clientSecret)
-                  setClientSecrect(data?.clientSecret)
-                  console.log(data);
-            })
+        if(price){
+          fetch('http://localhost:5000/create-payment-intent' , {
+            method: "POST",
+            headers: {
+                  'content-type': 'application/json',
+            },
+            body: JSON.stringify({price})
+      })
+      .then(res => res.json())
+      .then(data => {
+            if(data?.clientSecret)
+            setClientSecrect(data?.clientSecret)
+            console.log(data);
+      })
+
+        }
+           
 
       },[price])
+  
       
     
       const handleSubmit = async (event) => {
@@ -53,27 +61,55 @@ const ChackoutFrom = () => {
           console.log('[PaymentMethod]', paymentMethod);
           setCardError('')
         }
+        setSuccess('')
       //   confom card payment 
-      const {paymentIntent, Internterror} = await stripe.confirmCardPayment(
-            '{PAYMENT_INTENT_CLIENT_SECRET}',
-            {
-              payment_method: {
-                card: card,
-                billing_details: {
-                  name: 'Md Mamun',
-                },
+      if(email) {
+        const {paymentIntent, Internterror} = await stripe.confirmCardPayment(
+          clientSecrect,
+          {
+            payment_method: {
+              card: card,
+              billing_details: {
+                name: name,
+                email: email,
+                phone: number
               },
             },
-          );
+          },
+        );
+        if(Internterror){
+          setCardError(Internterror?.message)
+        }
+        else{
+          setCardError('')
+          setSuccess('Your Payment Successfull')
+          console.log(paymentIntent);
+          setTransactionId(paymentIntent?.id)
 
-          if(Internterror){
-            setCardError(Internterror?.message)
+          const payment = {
+            transactionId: transactionId,
+            prodecutId: _id
           }
-          else{
-            setCardError('')
-            setSuccess('Your payment confrom')
-            console.log(paymentIntent);
-          }
+
+          fetch(`http://localhost:5000/order/${_id}` , {
+            method: "PATCH",
+            headers: {
+              'content-type': 'application/json',
+            },
+            body: JSON.stringify(payment)
+          })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+          })
+
+
+        }
+
+      }
+      
+
+         
 
 
       };
@@ -81,16 +117,19 @@ const ChackoutFrom = () => {
 
       return (
             <>
-                 <form onSubmit={handleSubmit}>
+                 <form  onSubmit={handleSubmit}>
       <CardElement
+      className='border py-4 rounded-xl shadow px-1'
         options={{
           style: {
             base: {
               fontSize: '16px',
+             
               color: '#424770',
               '::placeholder': {
                 color: '#aab7c4',
               },
+              
             },
             invalid: {
               color: '#9e2146',
@@ -98,13 +137,15 @@ const ChackoutFrom = () => {
           },
         }}
       />
-      <button className='btn' type="submit" disabled={!stripe || !clientSecrect}>
+      <button className='btn mt-3 w-full' type="submit" disabled={!stripe || !clientSecrect}>
         Pay
       </button>
-      
+
+      {cardError && <p className='text-red-500'>{cardError}</p>}
+    {success && <p className='text-green-500'>{success}</p>}
+    {transactionId && <p>Your transactionId: {transactionId}</p>}
     </form>
-    {cardError && <p>{cardError}</p>}
-    {success && <p>{success}</p>}
+    
             </>
        
       );

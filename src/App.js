@@ -14,6 +14,12 @@ import NormalRegister from './pages/Authentication/NormalRegister';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Payment from './pages/DashBoard/Payment';
+import User from './pages/DashBoard/User';
+import ManageOrder from './pages/DashBoard/ManageOrder';
+import RequreAdmin from './pages/Authentication/RequreAdmin';
+import ManageService from './pages/DashBoard/ManageService';
+import Service from './pages/DashBoard/Service';
+import Project from './pages/DashBoard/Project';
 
 
   
@@ -26,11 +32,24 @@ function App() {
         <Route path='/' element={<Home/>}></Route>
         <Route path='/login' element={<NomalLogin/>}></Route>
         <Route path='/register' element={<NormalRegister/>}></Route>
-        <Route path='/dashboard' element={<Dashborad> </Dashborad>}>
+        <Route path='/service' element={<RequreAuth><Service></Service></RequreAuth>}></Route>
+        <Route path='/project' element={<RequreAuth><Project/></RequreAuth>}></Route>
+        <Route path='/dashboard' element={<RequreAuth>
+          <Dashborad> </Dashborad>
+        </RequreAuth>}>
           <Route index element={<Book/>}></Route>
           <Route path='/dashboard/bookingList' element={<BookingList/>}></Route>
           <Route path='/dashboard/review' element={<Review/>}></Route>
           <Route path='payment/:id' element={<Payment/>}></Route>
+          <Route path='user' element={<RequreAdmin>
+            <User/>
+          </RequreAdmin>}></Route>
+          <Route path='manageOrder' element={<RequreAdmin>
+            <ManageOrder/>
+          </RequreAdmin>}></Route>
+          <Route path='manageService' element={<RequreAdmin>
+            <ManageService/>
+          </RequreAdmin>}></Route>
         </Route>
         <Route path='/myProfile' element={
           <RequreAuth>
