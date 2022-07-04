@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 const UserRow = ({user , index}) => {
       const {_id, name , email , role} = user
       const AdminHendeler = () => {
-            fetch(`http://localhost:5000/user/admin/${email}` , {
+            fetch(`https://vast-beyond-68425.herokuapp.com/user/admin/${email}` , {
                   method: "PUT",
                   headers: {
                         'Content-type': 'application/json',
@@ -30,7 +30,7 @@ const UserRow = ({user , index}) => {
       }
 
       const userDeleteHundeler = (id) =>{
-            fetch(`http://localhost:5000/user/${id}` , {
+            fetch(`https://vast-beyond-68425.herokuapp.com/user/${id}` , {
                   method: "DELETE",
             
                   })

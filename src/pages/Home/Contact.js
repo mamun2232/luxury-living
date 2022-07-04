@@ -28,7 +28,7 @@ const Contact = () => {
                                                       <input type="text" placeholder="Phone Number" class="input input-bordered w-full max-w-xs" />
                                                 </div>
                                                 <div className='w-full mt-2'>
-                                                      <textarea class="textarea input-bordered  w-full" placeholder="text"></textarea>
+                                                      <textarea class="textarea input-bordered  w-full" placeholder="Enter Message Text"></textarea>
                                                 </div>
                                           </div>
                                           <div className='text-center'>

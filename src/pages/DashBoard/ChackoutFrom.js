@@ -14,7 +14,7 @@ const ChackoutFrom = ({myOrder}) => {
 
       useEffect(()=> {
         if(price){
-          fetch('http://localhost:5000/create-payment-intent' , {
+          fetch('https://vast-beyond-68425.herokuapp.com/create-payment-intent' , {
             method: "POST",
             headers: {
                   'content-type': 'application/json',
@@ -91,7 +91,7 @@ const ChackoutFrom = ({myOrder}) => {
             prodecutId: _id
           }
 
-          fetch(`http://localhost:5000/order/${_id}` , {
+          fetch(`https://vast-beyond-68425.herokuapp.com/order/${_id}` , {
             method: "PATCH",
             headers: {
               'content-type': 'application/json',

@@ -67,12 +67,12 @@ const Login = ({ closeModal, googleerror, gooleuser }) => {
         <Form autoComplete="off" onSubmit={handleSubmit}>
           <div className=''>
             <div>
-              <div class="form-control w-full max-w-xs">
+              <div class="form-control w-full ">
                 <label class="label">
                   <span class="label-text">Email</span>
 
                 </label>
-                <input type="email" id='email' {...formik.getFieldProps('email')} placeholder="Email Address" class="input input-bordered w-full max-w-xs" />
+                <input type="email" id='email' {...formik.getFieldProps('email')} placeholder="Email Address" class="input input-bordered w-full " />
                 <label class="label">
                   {formik.touched.email && formik.errors.email ? (
                     <p className='text-red-500'>{formik.errors.email}</p>
@@ -80,19 +80,19 @@ const Login = ({ closeModal, googleerror, gooleuser }) => {
 
                 </label>
               </div>
-              <div class="form-control w-full max-w-xs ">
+              <div class="form-control w-full ">
                 <label class="label">
                   <span class="label-text">Password</span>
 
                 </label>
-                <input type="password" id='password' {...formik.getFieldProps('password')} placeholder="Enter Password" class="input input-bordered w-full max-w-xs" />
+                <input type="password" id='password' {...formik.getFieldProps('password')} placeholder="Enter Password" class="input input-bordered w-full " />
                 <label class="label">
                   {formik.touched.password && formik.errors.password ? (
                     <p className='text-red-500'>{formik.errors.password}</p>
                   ) : null}
                 </label>
 
-                <input className='btn' type="submit" value="Login" />
+                <input className='my-btn' type="submit" value="Login" />
                 {errorMassage}
                 <p className='text-right text-blue-500 mt-1'>Forgate Password</p>
 

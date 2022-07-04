@@ -117,7 +117,7 @@ const NormalRegister = () => {
                                                       </label>
 
 
-                                                      <input className='btn' type="submit" value="Register" />
+                                                      <input className='my-btn' type="submit" value="Register" />
                                                       {errorMassage}
 
                                                 </div>

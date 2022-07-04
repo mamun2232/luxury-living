@@ -5,7 +5,7 @@ const ManageOrder = () => {
       const [order, setOrder] = useState([])
 
       const orderShiftHundeler = (id) => {
-        fetch(`http://localhost:5000/shipped/${id}`,{
+        fetch(`https://vast-beyond-68425.herokuapp.com/shipped/${id}`,{
           method: "PATCH",
           headers: {
             "content-type": "application/json"
@@ -20,7 +20,7 @@ const ManageOrder = () => {
       }
 
       const orderDeleteHundeler = (id) => {
-        fetch(`http://localhost:5000/order/${id}`,{
+        fetch(`https://vast-beyond-68425.herokuapp.com/order/${id}`,{
           method: "DELETE",
 
         })
@@ -38,7 +38,7 @@ const ManageOrder = () => {
      
     
       useEffect(() => {
-        fetch(`http://localhost:5000/order`)
+        fetch(`https://vast-beyond-68425.herokuapp.com/order`)
           .then(res => res.json())
           .then(data => setOrder(data))
       },[order])

@@ -10,7 +10,7 @@ const BookingList = () => {
  
 
   useEffect(() => {
-    fetch(`http://localhost:5000/order/${user?.email}`)
+    fetch(`https://vast-beyond-68425.herokuapp.com/order/${user?.email}`)
       .then(res => res.json())
       .then(data => setBooking(data))
   }, [user , Bookings])

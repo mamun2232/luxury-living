@@ -62,7 +62,7 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
                   <Dialog.Title
                     as="h3"
                     className="text-2xl font-medium leading-6 text-center text-gray-900 relative"
-                  > <span onClick={() => closeModal()} className=' absolute right-0 top-0 cursor-pointer'><TiDeleteOutline /></span>
+                  > <span onClick={() => closeModal()} className='text-blue-800 absolute right-0 top-0 cursor-pointer'><TiDeleteOutline /></span>
 
 
 
@@ -82,9 +82,9 @@ const LoginModal = ({ closeModal, openModal, isOpen }) => {
                           ></Login>
 
 {login ? 
-                        <p className='text-center'>Are You new? <span onClick={()=> setLogin(false)} className='text-blue-400 cursor-pointer'>Please Register</span></p> 
+                        <p className='text-center mt-2'>Are You new? <span onClick={()=> setLogin(false)} className='text-blue-400 cursor-pointer'>Please Register</span></p> 
                         :
-                        <p className='text-center'>All ready Login? <span onClick={()=> setLogin(true)} className='text-blue-400 cursor-pointer'>Please Login</span></p> 
+                        <p className='text-center mt-2'>All ready Login? <span onClick={()=> setLogin(true)} className='text-blue-400 cursor-pointer'>Please Login</span></p> 
                   
                   }
 

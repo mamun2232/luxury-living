@@ -101,7 +101,7 @@ const NomalLogin = () => {
                                                                         ) : null}
                                                                   </label>
 
-                                                                  <input className='btn' type="submit" value="Login" />
+                                                                  <input className='my-btn' type="submit" value="Login" />
                                                                   {errorMassage}
                                                                   <p className='text-right text-blue-500 mt-1'>Forgate Password</p>
 

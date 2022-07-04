@@ -58,7 +58,7 @@ const Review = () => {
                         comment: values.comment,
                         country: values.country,
                   }
-                  fetch('http://localhost:5000/review' , {
+                  fetch('https://vast-beyond-68425.herokuapp.com/review' , {
                         method: "POST",
                         headers: {
                               'Content-type': 'application/json',

@@ -78,12 +78,12 @@ const Registation = ({ closeModal, googleerror, gooleuser }) => {
     <div>
       <FormikProvider value={formik}>
         <Form autoComplete="off" onSubmit={handleSubmit}>
-          <div class="form-control w-full max-w-xs">
+          <div class="form-control w-full">
             <label class="label">
               <span class="label-text">Name</span>
 
             </label>
-            <input {...formik.getFieldProps('name')} id='name' type="text" placeholder="Enter Name" class="input input-bordered w-full max-w-xs" />
+            <input {...formik.getFieldProps('name')} id='name' type="text" placeholder="Enter Name" class="input input-bordered w-full " />
             <label class="label">
               {formik.touched.name && formik.errors.name ? (
                 <p className='text-red-500'>{formik.errors.name}</p>
@@ -91,12 +91,12 @@ const Registation = ({ closeModal, googleerror, gooleuser }) => {
 
             </label>
           </div>
-          <div class="form-control w-full max-w-xs">
+          <div class="form-control w-full ">
             <label class="label">
               <span class="label-text">Email</span>
 
             </label>
-            <input type="email" id='email' {...formik.getFieldProps('email')} placeholder="Email Address" class="input input-bordered w-full max-w-xs" />
+            <input type="email" id='email' {...formik.getFieldProps('email')} placeholder="Email Address" class="input input-bordered w-full" />
             <label class="label">
               {formik.touched.email && formik.errors.email ? (
                 <p className='text-red-500'>{formik.errors.email}</p>
@@ -104,12 +104,12 @@ const Registation = ({ closeModal, googleerror, gooleuser }) => {
 
             </label>
           </div>
-          <div class="form-control w-full max-w-xs ">
+          <div class="form-control w-full  ">
             <label class="label">
               <span class="label-text">Password</span>
 
             </label>
-            <input type="password" {...formik.getFieldProps('password')} id='password' placeholder="Enter Password" class="input input-bordered w-full max-w-xs" />
+            <input type="password" {...formik.getFieldProps('password')} id='password' placeholder="Enter Password" class="input input-bordered w-full " />
             <label class="label">
               {formik.touched.password && formik.errors.password ? (
                 <p className='text-red-500'>{formik.errors.password}</p>
@@ -117,7 +117,7 @@ const Registation = ({ closeModal, googleerror, gooleuser }) => {
             </label>
 
 
-            <input className='btn' type="submit" value="Register" />
+            <input className='my-btn' type="submit" value="Register" />
             {errorMassage}
 
           </div>

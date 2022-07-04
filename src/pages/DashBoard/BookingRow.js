@@ -9,7 +9,7 @@ const BookingRow = ({book , index }) => {
       const deletHundeler = (id) => {
             
             console.log(id);
-            fetch(`http://localhost:5000/order/${id}` , {
+            fetch(`https://vast-beyond-68425.herokuapp.com/order/${id}` , {
                   method: "DELETE",
                   })
                   .then(res => res.json())

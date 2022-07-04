@@ -4,7 +4,7 @@ const Project = () => {
  
       const [projects, setProject] = useState([])
       useEffect(() => {
-            fetch('http://localhost:5000/project')
+            fetch('https://vast-beyond-68425.herokuapp.com/project')
                   .then(res => res.json())
                   .then(data => setProject(data))
       }, [projects])
@@ -21,7 +21,7 @@ const Project = () => {
 
                   <div className='mt-20 grid grid-cols-1 lg:grid-cols-3 gap-10'>
                         {
-                              project.map((project , i) =>  <div key={i} class="card card-compact w-96  bg-red-200 ">
+                              project.map((project , i) =>  <div key={i} class="card card-compact w-96  bg-blue-50">
                               <figure><img className='h-80 w-full' src={project.img} alt="hotel" /></figure>
                               <div class="card-body text-center">
                                     <h2 class="text-xl">{project.name}</h2>

@@ -61,7 +61,10 @@ const Navber = () => {
   <div class="dropdown dropdown-end mr-4">
       <label tabindex="0" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
-          <img src="" />
+          {
+            user ? <img src={user?.photoURL} alt="" /> : <img src="/Assest/Image/profilePic.png" alt="" />
+          }
+          
         </div>
       </label>
       <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
@@ -81,9 +84,13 @@ const Navber = () => {
     <button
           type="button"
           onClick={openModal}
-          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          disabled={user}
+          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 cursor-pointer"
         >
-          Get Start
+          {
+            user ? <span>Hello, {user?.displayName || "User"}</span> : <span> Get Start</span>
+          }
+         
         </button>
         {/* <Link to='/login' className='rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>Login</Link> */}
        

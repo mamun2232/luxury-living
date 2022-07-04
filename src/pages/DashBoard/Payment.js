@@ -10,7 +10,7 @@ const Payment = () => {
       const { id } = useParams()
       const [myOrder , setMyorder] = useState([])
         useEffect(()=> {
-            fetch(`http://localhost:5000/orders/${id}`)
+            fetch(`https://vast-beyond-68425.herokuapp.com/orders/${id}`)
             .then(res => res.json())
             .then(data => setMyorder(data))
 

@@ -11,7 +11,7 @@ import { Pagination, Navigation } from "swiper";
 const Review = () => {
   const [review, setReview] = useState([])
   useEffect(() => {
-    fetch('http://localhost:5000/review')
+    fetch('https://vast-beyond-68425.herokuapp.com/review')
       .then(res => res.json())
       .then(data => setReview(data))
   }, [])
@@ -42,7 +42,7 @@ const Review = () => {
             review.map((rev, i) => <SwiperSlide key={i}>
 
               <div className='py-10'>
-              <div class="card w-96 h-80   bg-red-100 shadow-xl">
+              <div class="card w-96 h-80   bg-blue-50 shadow-xl">
               <div class="card-body h-full">
                 <div className=" text-center">
                   <div class="avatar  ">

@@ -11,10 +11,10 @@ const Dashborad = () => {
       const [admin] = useAdmin(user)
 
       return (
-            <div className='max-w-7xl m-auto px-2 mt-5'>
+            <div className='max-w-7xl m-auto px-2'>
                   <div class="drawer drawer-mobile">
                         <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-                        <div class="drawer-content rounded background">
+                        <div class="drawer-content rounded  py-5">
                               {/* <!-- Page content here --> */}
                               <h1 className='text-center text-2xl'>Welcome to Our DashBoard</h1>
                               <Outlet></Outlet>
@@ -23,7 +23,7 @@ const Dashborad = () => {
                         </div>
                         <div class="drawer-side bg">
                               <label for="my-drawer-2" class="drawer-overlay"></label>
-                              <ul class="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+                              <ul class="menu p-4 overflow-y-auto w-80 background text-base-content">
                                     {/* <!-- Sidebar content here --> */}
                                     <li><NavLink to='book'>
                                           <img width={24} height={24} src="/Assest/Icon/Group.png" alt="" />

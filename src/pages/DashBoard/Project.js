@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const Project = () => {
       const [projects, setProject] = useState([])
       useEffect(() => {
-            fetch('http://localhost:5000/project')
+            fetch('https://vast-beyond-68425.herokuapp.com/project')
                   .then(res => res.json())
                   .then(data => setProject(data))
       }, [projects])

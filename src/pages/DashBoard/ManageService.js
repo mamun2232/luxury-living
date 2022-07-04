@@ -5,14 +5,14 @@ import { toast } from 'react-toastify';
 const ManageService = () => {
       const [service , setService] = useState([])
       useEffect(() => {
-            fetch("http://localhost:5000/service")
+            fetch("https://vast-beyond-68425.herokuapp.com/service")
             .then(res => res.json())
             .then(data => setService(data))
        
       }, [service])
 
       const serviceDeleteHundeler = (id) => {
-            fetch(`http://localhost:5000/service/${id}` , {
+            fetch(`https://vast-beyond-68425.herokuapp.com/service/${id}` , {
                   method: "DELETE",
             
                   })

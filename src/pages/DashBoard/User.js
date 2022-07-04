@@ -12,7 +12,7 @@ const User = () => {
      
     
       useEffect(() => {
-        fetch(`http://localhost:5000/user` , {
+        fetch(`https://vast-beyond-68425.herokuapp.com/user` , {
           method: "GET",
           headers: {
             'Content-type': 'application/json',

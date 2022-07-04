@@ -31,7 +31,7 @@ const Book = () => {
 
       useEffect(() => {
 
-            fetch('http://localhost:5000/service' , {
+            fetch('https://vast-beyond-68425.herokuapp.com/service' , {
                   method: "GET",
                   headers: {
                         'Content-type': 'application/json',
@@ -93,7 +93,7 @@ const Book = () => {
                   }
                   console.log(order);
 
-                  fetch('http://localhost:5000/order', {
+                  fetch('https://vast-beyond-68425.herokuapp.com/order', {
                         method: 'POST',
                         body: JSON.stringify(order),
                         headers: {
